@@ -1,0 +1,24 @@
+:root {
+  font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+}
+
+.v-application {
+  font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif !important;
+}
+
+.text-mono {
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-card {
+  transition: box-shadow .15s ease, transform .15s ease;
+}
+.stat-card:hover {
+  box-shadow: 0 6px 20px rgba(21, 42, 107, 0.08) !important;
+  transform: translateY(-1px);
+}
+
+.section-title {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
