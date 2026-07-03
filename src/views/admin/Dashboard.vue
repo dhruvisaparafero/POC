@@ -90,7 +90,7 @@
             </div>
             <v-icon icon="mdi-dots-horizontal" size="18" />
           </div>
-          <MapPanel v-if="trackedStop" :points="[{ lat: trackedStop.lat, lng: trackedStop.lng, color: '#2F6FED', icon: 'mdi-truck', pulse: true, label: trackedOrder?.branch }]" height="150" show-labels class="mb-3" />
+          <GoogleMap v-if="trackedStop" :points="[{ lat: trackedStop.lat, lng: trackedStop.lng }]" height="150" class="mb-3" />
           <div class="d-flex justify-space-between align-center">
             <span class="text-body-2 font-weight-medium">{{ trackedOrder?.id }}</span>
             <StatusChip v-if="trackedOrder" :status="trackedOrder.status" />
@@ -192,7 +192,7 @@
 import { ref, computed } from 'vue'
 import { useLogisticsStore } from '../../stores/logistics'
 import StatusChip from '../../components/StatusChip.vue'
-import MapPanel from '../../components/MapPanel.vue'
+import GoogleMap from '../../components/GoogleMap.vue'
 
 const store = useLogisticsStore()
 const range = ref('March 2026')

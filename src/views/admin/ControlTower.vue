@@ -30,7 +30,7 @@
       <v-row>
         <v-col cols="12" md="8">
           <v-card class="pa-3">
-            <MapPanel :points="mapPoints" height="520" show-labels @select="onSelect" />
+            <GoogleMap :points="mapPoints" height="520" :zoom="5" />
           </v-card>
         </v-col>
 
@@ -89,14 +89,12 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
 import { useLogisticsStore } from '../../stores/logistics'
 import StatCard from '../../components/StatCard.vue'
 import StatusChip from '../../components/StatusChip.vue'
-import MapPanel from '../../components/MapPanel.vue'
+import GoogleMap from '../../components/GoogleMap.vue'
 
 const store = useLogisticsStore()
-const router = useRouter()
 const tab = ref('map')
 const liveTrips = computed(() => store.trips.filter((t) => t.status === 'in-transit' || t.status === 'planned'))
 const ordersInTransit = computed(() => store.orders.filter((o) => o.status === 'in-transit').length)
@@ -104,19 +102,5 @@ const ordersInTransit = computed(() => store.orders.filter((o) => o.status === '
 const mapPoints = computed(() => liveTrips.value.map((t) => ({
   lat: t.currentPos.lat,
   lng: t.currentPos.lng,
-  label: t.id,
-  color: pinColor(t.status),
-  icon: 'mdi-truck',
-  pulse: t.status === 'in-transit',
-  id: t.id,
 })))
-
-function pinColor(status) {
-  const map = { 'in-transit': '#2F6FED', planned: '#0F9E96', delivered: '#1DAA6E', failed: '#E5484D' }
-  return map[status] || '#0B1E4D'
-}
-
-function onSelect(p) {
-  router.push({ name: 'admin-trip-detail', params: { id: p.id } })
-}
 </script>

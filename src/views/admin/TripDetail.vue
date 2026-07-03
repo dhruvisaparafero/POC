@@ -42,7 +42,7 @@
 
         <v-card class="pa-5">
           <div class="font-weight-bold mb-3">Route Map</div>
-          <MapPanel :points="mapPoints" height="320" show-labels />
+          <GoogleMap :points="mapPoints" height="320" />
         </v-card>
       </v-col>
 
@@ -77,7 +77,7 @@
 import { ref, computed } from 'vue'
 import { useLogisticsStore } from '../../stores/logistics'
 import StatusChip from '../../components/StatusChip.vue'
-import MapPanel from '../../components/MapPanel.vue'
+import GoogleMap from '../../components/GoogleMap.vue'
 
 const props = defineProps({ id: String })
 const store = useLogisticsStore()
@@ -88,9 +88,7 @@ const orders = computed(() => (trip.value ? store.ordersForTrip(trip.value) : []
 const driver = computed(() => trip.value && store.driverById(trip.value.driverId))
 const vehicle = computed(() => trip.value && store.vehicleById(trip.value.vehicleId))
 const allStops = computed(() => orders.value.flatMap((o) => o.stops))
-const mapPoints = computed(() => allStops.value.map((s) => ({
-  lat: s.lat, lng: s.lng, label: `Stop ${s.seq}`, color: store.statusColor(s.status) === 'success' ? '#1DAA6E' : '#2F6FED', icon: 'mdi-map-marker',
-})))
+const mapPoints = computed(() => allStops.value.map((s) => ({ lat: s.lat, lng: s.lng })))
 
 function deliver() {
   justInvoiced.value = store.markTripDelivered(props.id)
